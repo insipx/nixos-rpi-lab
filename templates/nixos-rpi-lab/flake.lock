@@ -227,14 +227,18 @@
     },
     "homelab": {
       "locked": {
-        "path": "../../",
-        "type": "path"
+        "lastModified": 1789842239,
+        "narHash": "sha256-8mMIjVsTgZq47Qddh+EEyKsieND7VjFZjdUKarPJkF0=",
+        "owner": "insipx",
+        "repo": "nixos-rpi-lab",
+        "rev": "e04dc137870d2d03e698148719760c288b1cbed4",
+        "type": "github"
       },
       "original": {
-        "path": "../../",
-        "type": "path"
-      },
-      "parent": []
+        "owner": "insipx",
+        "repo": "nixos-rpi-lab",
+        "type": "github"
+      }
     },
     "import-tree": {
       "locked": {

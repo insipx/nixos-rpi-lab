@@ -11,5 +11,5 @@
     raspberry-pi-5.bluetooth
 
   ];
-  services.getty.autologinUser = "foo";
+  services.getty.autologinUser = "user";
 }

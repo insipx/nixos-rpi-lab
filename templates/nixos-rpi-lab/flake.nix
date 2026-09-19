@@ -27,7 +27,7 @@
       inputs.nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
     };
     kubenix.url = "github:hall/kubenix";
-    homelab.url = "github:insipx/nixos-lab";
+    homelab.url = "github:insipx/nixos-rpi-lab";
   };
   nixConfig = {
     extra-substituters = [

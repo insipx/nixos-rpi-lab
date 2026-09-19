@@ -1,7 +1,11 @@
 { inputs, ... }:
 {
-  flake.nixosConfigurations.initialInstall = inputs.nixos-raspberrypi.lib.nixosSystemFull {
+  # plain `nixosSystem` already imports `inject-overlays`, and `nixos-raspberrypi.lib.nixosSystem{,Full}`
+  # would apply those overlays a second time, resulting in infinite recursion in `raspberrypifw`
+  flake.nixosConfigurations.initialInstall = inputs.nixos-raspberrypi.inputs.nixpkgs.lib.nixosSystem {
     modules = [
+      inputs.disko.nixosModules.disko
+      inputs.lab-secrets.nixosModules.default
       inputs.homelab.nixosModules.default
       {
         rpiHomeLab = {
@@ -19,6 +23,9 @@
         ];
       }
     ];
-    specialArgs = inputs;
+    specialArgs = {
+      inherit inputs;
+      inherit (inputs) nixos-raspberrypi;
+    };
   };
 }

@@ -59,7 +59,7 @@ inputs.colmena.lib.makeHive {
     ];
   };
 
-  io = _: {
+  node2 = _: {
     imports = [
       ./../machine-specific/rpi5
     ]
@@ -112,33 +112,5 @@ inputs.colmena.lib.makeHive {
 
     };
     lab-secrets.settings.k3s = true;
-
-  };
-  tinyca = _: {
-
-    imports = [
-      ./../machine-specific/tinyca
-    ]
-    ++ commonImports;
-    deployment = {
-      targetUser = "user";
-      tags = [
-        "tinyca"
-        "homelab"
-      ];
-      targetHost = "tinyca";
-      buildOnTarget = false;
-    };
-    rpiHomeLab = {
-      networking = {
-        hostId = "33333333";
-        hostName = "tinyca";
-        address = "10.10.10.4/22";
-        interface = "end0";
-      };
-      k3s = {
-        enable = false;
-      };
-    };
   };
 }
