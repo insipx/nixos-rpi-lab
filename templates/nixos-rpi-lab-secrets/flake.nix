@@ -1,5 +1,5 @@
 {
-  description = "secrets for jupiter homelab";
+  description = "secrets for nixos rpi homelab";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";

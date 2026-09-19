@@ -7,7 +7,8 @@
       url = "github:nvmd/nixos-raspberrypi/main";
     };
     lab-secrets = {
-      url = "github:insipx/your-lab-secrets-repo";
+      # url = "github:insipx/your-lab-secrets-repo";
+      url = "path:../nixos-rpi-lab-secrets";
     };
     disko = {
       # the fork is needed for partition attributes support
@@ -26,7 +27,8 @@
       inputs.nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
     };
     kubenix.url = "github:hall/kubenix";
-    homelab.url = "github:insipx/nixos-lab";
+    # homelab.url = "github:insipx/nixos-lab";
+    homelab.url = "path:../../";
   };
   nixConfig = {
     extra-substituters = [
@@ -48,7 +50,6 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (_: {
       imports = [
-        inputs.pkgs-by-name-for-flake-parts.flakeModule
         inputs.flake-parts.flakeModules.easyOverlay
         ./nixos-configurations.nix
       ];
@@ -60,7 +61,6 @@
       perSystem =
         {
           pkgs,
-          self',
           system,
           inputs',
           ...
@@ -84,7 +84,6 @@
             nativeBuildInputs = [
               inputs'.nixos-anywhere.packages.default
               inputs'.colmena.packages.colmena
-              self'.packages.build_session
               pkgs.kubernetes-helm
               pkgs.sops
               pkgs.vals

@@ -1,4 +1,4 @@
-{ inputs }:
+{ inputs, ... }:
 {
   flake.nixosConfigurations.initialInstall = inputs.nixos-raspberrypi.lib.nixosSystemFull {
     modules = [
