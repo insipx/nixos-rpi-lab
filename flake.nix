@@ -13,12 +13,12 @@
 
       };
       templates = {
-        rpi-lab = {
+        lab = {
           path = ./templates/nixos-rpi-lab;
           description = "A k3s nixos lab";
         };
 
-        rpi-lab-secrets = {
+        secrets = {
           path = ./templates/nixos-rpi-lab-secrets;
           description = "Secrets for the lab";
         };
