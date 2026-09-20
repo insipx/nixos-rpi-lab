@@ -81,13 +81,14 @@
             ];
           };
           devShells.default = pkgs.mkShell {
-            nativeBuildInputs = [
+            nativeBuildInputs = with pkgs; [
               inputs'.nixos-anywhere.packages.default
               inputs'.colmena.packages.colmena
-              pkgs.kubernetes-helm
-              pkgs.sops
-              pkgs.vals
-              pkgs.age-plugin-yubikey
+              kubernetes-helm
+              sops
+              vals
+              age-plugin-yubikey
+              zstd
             ];
           };
           packages = {
