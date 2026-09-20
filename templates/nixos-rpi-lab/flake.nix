@@ -51,6 +51,7 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         ./nixos-configurations.nix
+        ./installer-images.nix
       ];
       systems = [
         "aarch64-darwin"
