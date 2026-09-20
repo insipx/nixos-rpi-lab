@@ -6,9 +6,9 @@ localFlake:
     localFlake.sops-nix.nixosModules.default
   ];
   options = {
-    jupiter-secrets = {
+    lab-secrets = {
       enable = lib.mkOption {
-        defaultText = lib.literalMD "enable jupiter secrets";
+        defaultText = lib.literalMD "enable lab secrets";
         type = lib.types.bool;
         default = false;
       };
@@ -26,12 +26,12 @@ localFlake:
       };
     };
   };
-  config.sops = lib.mkIf config.jupiter-secrets.enable {
-    age = lib.mkIf config.jupiter-secrets.generateKey {
+  config.sops = lib.mkIf config.lab-secrets.enable {
+    age = lib.mkIf config.lab-secrets.generateKey {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       generateKey = false;
     };
-    secrets.k3s_token = lib.mkIf config.jupiter-secrets.settings.k3s {
+    secrets.k3s_token = lib.mkIf config.lab-secrets.settings.k3s {
       sopsFile = ./secrets/homelab.yaml;
     };
   };
