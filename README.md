@@ -3,6 +3,19 @@
 Much of this configuration/how to is also on nvmd/nixos-raspberrypi:
 https://github.com/nvmd/nixos-raspberrypi
 
+# Repository layout
+
+```text
+.
+├── modules/                     # Reusable NixOS modules
+│   └── homelab/                 # Raspberry Pi homelab configuration options
+└── templates/                   # Flake templates for new deployments
+    ├── nixos-rpi-lab/           # Cluster configuration and Kubernetes deployments
+    └── nixos-rpi-lab-secrets/   # Separate secrets repository using age and sops
+```
+
+See the [lab template README](templates/nixos-rpi-lab/README.md) for its directory layout.
+
 # The template for the lab
 
 ```nix

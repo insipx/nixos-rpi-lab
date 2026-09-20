@@ -5,6 +5,7 @@ let
   initial = self.nixosConfigurations.initialInstall;
   inherit (initial.config.users.users.root.openssh.authorizedKeys) keys;
 
+  # nixos-raspberry pi rpi5 stock installer image, with ssh keys added from 'initial' config
   rpi5-installer = nixos-raspberrypi.nixosConfigurations.rpi5-installer.extendModules {
     modules = [
       {
@@ -14,6 +15,7 @@ let
     ];
   };
 
+  # SD Image of the initial config minus filesystem, sd image instead
   initialInstall-sd = initial.extendModules {
     modules = [
       {
