@@ -193,7 +193,6 @@ in
           };
           "longhorn-ext4" = {
             type = "zfs_volume";
-            size = "900G"; # Choose per node, leaving space for the OS.
             content = {
               type = "filesystem";
               format = "ext4";
