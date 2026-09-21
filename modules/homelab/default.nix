@@ -49,8 +49,8 @@
         };
         longhornDiskSize = lib.mkOption {
           defaultText = "size of the ext4 overlay for longhorn";
-          type = lib.types.str;
-          default = "25G";
+          type = lib.types.nullOr lib.types.str;
+          default = null;
         };
       };
     };
@@ -107,9 +107,10 @@
       rpcbind.enable = config.rpiHomeLab.k3s.longhorn;
       multipath.enable = false;
     };
-    # Configure longhorn disk size for the overlay if longhorn is enabled
-    disko.devices.zpool.rpool.datasets."longhorn-ext4".size =
-      lib.mkIf config.rpiHomeLab.k3s.longhorn config.rpiHomeLab.k3s.longhornDiskSize;
+    disko = lib.mkIf config.rpiHomeLab.k3s.longhorn {
+      # Configure longhorn disk size for the overlay if longhorn is enabled
+      devices.zpool.rpool.datasets."longhorn-ext4".size = config.rpiHomeLab.k3s.longhornDiskSize;
+    };
     # patch for nixos FHS that enables nsenter for longhorn in containers
     systemd.services.iscsid.serviceConfig = lib.mkIf config.rpiHomeLab.k3s.longhorn {
       PrivateMounts = "yes";
