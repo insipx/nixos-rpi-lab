@@ -3,6 +3,9 @@
 Much of this configuration/how to is also on nvmd/nixos-raspberrypi:
 https://github.com/nvmd/nixos-raspberrypi
 
+A guide for initial setup is available https://insipx.xyz/blog/raspberry-pi-homelab/
+
+
 # Repository layout
 
 ```text
