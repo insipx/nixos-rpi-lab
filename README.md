@@ -63,7 +63,7 @@ nix flake init -t github:insipx/nixos-rpi-lab#secrets
 }
 ```
 
-# NixOS Homelab Module Configuraiton
+# NixOS Homelab Module Configuration
 
 ## Configuration
 
