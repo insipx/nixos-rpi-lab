@@ -51,6 +51,7 @@ inputs.colmena.lib.makeHive {
     rpiHomeLab.k3s.leader = true;
     rpiHomeLab.k3s.enable = true;
     rpiHomeLab.k3s.longhorn = true;
+    rpiHomeLab.k3s.longhornDiskSize = "25G";
     lab-secrets.settings.k3s = true;
     services.k3s.extraFlags = [
       "--tls-san node1.lab.lan"
@@ -80,6 +81,8 @@ inputs.colmena.lib.makeHive {
         interface = "end0";
       };
       k3s.longhorn = true;
+      k3s.longhornDiskSize = "25G";
+
       k3s.enable = true;
     };
     lab-secrets.settings.k3s = true;
@@ -109,6 +112,7 @@ inputs.colmena.lib.makeHive {
       };
       k3s.enable = true;
       k3s.longhorn = true;
+      rpiHomeLab.k3s.longhornDiskSize = "25G";
 
     };
     lab-secrets.settings.k3s = true;

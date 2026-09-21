@@ -22,7 +22,7 @@
           path = ./templates/nixos-rpi-lab-secrets;
           description = "Secrets for the lab";
         };
-        defaultTemplate = self.templates.rpi-lab;
+        defaultTemplate = self.templates.lab;
 
       };
     };
