@@ -7,6 +7,16 @@
           defaultText = lib.literalMD "interface name for ethernet";
           type = lib.types.nullOr lib.types.str;
         };
+        gateway = lib.mkOption {
+          defaultText = lib.literalMD "router gateway";
+          type = lib.types.str;
+          default = "10.10.69.1";
+        };
+        dns = lib.mkOption {
+          defaultText = lib.literalMD "DNS server";
+          type = lib.types.str;
+          default = "1.1.1.1";
+        };
         hostId = lib.mkOption {
           defaultText = lib.literalMD "for ZFS. must be unique";
           type = lib.types.nullOr lib.types.str;
@@ -67,13 +77,13 @@
         ];
         routes = [
           {
-            Gateway = "10.10.69.1";
+            Gateway = config.rpiHomeLab.networking.gateway;
             Destination = "0.0.0.0/0";
           }
         ];
         # make the routes on this interface a dependency for network-online.target
         linkConfig.RequiredForOnline = "routable";
-        dns = [ "10.10.69.1" ];
+        dns = [ config.rpiHomeLab.networking.dns ];
       };
     };
     networking = {
