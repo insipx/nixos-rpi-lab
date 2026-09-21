@@ -8,18 +8,15 @@ localFlake:
   options = {
     lab-secrets = {
       enable = lib.mkOption {
-        defaultText = lib.literalMD "enable lab secrets";
+        description = lib.literalMD "enable lab secrets";
+        defaultText = "false";
         type = lib.types.bool;
         default = false;
       };
-      generateKey = lib.mkOption {
-        defaultText = lib.literalMD "generate sshkeypaths and generate key";
-        type = lib.types.bool;
-        default = true;
-      };
       settings = {
         k3s = lib.mkOption {
-          defaultText = lib.literalMD "enable k3s secret";
+          description = lib.literalMD "enable k3s secret";
+          defaultText = "false";
           type = lib.types.bool;
           default = false;
         };
@@ -27,7 +24,7 @@ localFlake:
     };
   };
   config.sops = lib.mkIf config.lab-secrets.enable {
-    age = lib.mkIf config.lab-secrets.generateKey {
+    age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       generateKey = false;
     };

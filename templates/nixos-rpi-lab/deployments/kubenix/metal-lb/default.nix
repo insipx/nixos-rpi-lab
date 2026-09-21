@@ -78,12 +78,6 @@ in
           version = "v1beta1";
           kind = "L2Advertisement";
         };
-        servicemonitors = {
-          attrName = "servicemonitors";
-          group = "monitoring.coreos.com";
-          version = "v1";
-          kind = "ServiceMonitor";
-        };
       };
     };
   };

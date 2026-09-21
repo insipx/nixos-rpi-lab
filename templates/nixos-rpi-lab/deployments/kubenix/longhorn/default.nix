@@ -89,12 +89,6 @@ in
           version = "v1alpha1";
           kind = "IngressRoute";
         };
-        servicemonitors = {
-          attrName = "servicemonitors";
-          group = "monitoring.coreos.com";
-          version = "v1";
-          kind = "ServiceMonitor";
-        };
       };
     };
   };

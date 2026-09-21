@@ -6,9 +6,11 @@
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
     };
+    sops-nix.url = "github:Mic92/sops-nix";
     lab-secrets = {
       # url = "github:insipx/your-lab-secrets-repo";
       url = "path:../nixos-rpi-lab-secrets";
+      inputs.sops-nix.follows = "sops-nix";
     };
     disko = {
       # the fork is needed for partition attributes support

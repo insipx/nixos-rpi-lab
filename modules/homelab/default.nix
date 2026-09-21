@@ -4,47 +4,47 @@
     rpiHomeLab = {
       networking = {
         interface = lib.mkOption {
-          defaultText = lib.literalMD "interface name for ethernet";
+          description = lib.literalMD "interface name for ethernet";
           type = lib.types.nullOr lib.types.str;
         };
         gateway = lib.mkOption {
-          defaultText = lib.literalMD "router gateway";
+          description = lib.literalMD "router gateway";
           type = lib.types.str;
           default = "10.10.69.1";
         };
         dns = lib.mkOption {
-          defaultText = lib.literalMD "DNS server";
+          description = lib.literalMD "DNS server";
           type = lib.types.str;
           default = "1.1.1.1";
         };
         hostId = lib.mkOption {
-          defaultText = lib.literalMD "for ZFS. must be unique";
+          description = lib.literalMD "for ZFS. must be unique";
           type = lib.types.nullOr lib.types.str;
         };
         hostName = lib.mkOption {
-          defaultText = lib.literalMD "machine hostname";
+          description = lib.literalMD "machine hostname";
           default = null;
           type = lib.types.nullOr lib.types.str;
         };
         address = lib.mkOption {
-          defaultText = lib.literalMD "machine ipv4 address";
+          description = lib.literalMD "machine ipv4 address";
           default = null;
           type = lib.types.nullOr lib.types.str;
         };
       };
       k3s = {
         enable = lib.mkOption {
-          defaultText = "Enable K3 config";
+          description = "Enable K3 config";
           type = lib.types.bool;
           default = false;
         };
         leader = lib.mkOption {
-          defaultText = "Whether this represents the leaders k3s node";
+          description = "Whether this represents the leaders k3s node";
           type = lib.types.bool;
           default = false;
         };
         agent = lib.mkOption {
-          defaultText = "make this node a worker-only agent node";
+          description = "make this node a worker-only agent node";
           type = lib.types.bool;
           default = false;
         };
@@ -53,12 +53,12 @@
           default = null;
         };
         longhorn = lib.mkOption {
-          defaultText = "enable longhorn label for this node _note:_ does not install longhorn itself.";
+          description = "enable longhorn label for this node _note:_ does not install longhorn itself.";
           type = lib.types.bool;
           default = false;
         };
         longhornDiskSize = lib.mkOption {
-          defaultText = "size of the ext4 overlay for longhorn";
+          description = "size of the ext4 overlay for longhorn";
           type = lib.types.nullOr lib.types.str;
           default = null;
         };
@@ -67,6 +67,15 @@
   };
 
   config = {
+    assertions = [
+      {
+        assertion =
+          config.rpiHomeLab.k3s.enable
+          -> ((config.lab-secrets.enable or false) && (config.lab-secrets.settings.k3s or false));
+        message = "rpiHomeLab.k3s.enable requires lab-secrets.enable = true and lab-secrets.settings.k3s = true (import the lab-secrets module).";
+      }
+    ];
+
     systemd = {
       network.networks."50-static" = lib.mkIf (config.rpiHomeLab.networking.address != null) {
         # match the interface by name
@@ -95,7 +104,8 @@
         role = if config.rpiHomeLab.k3s.agent then "agent" else "server";
         serverAddr = lib.mkIf (!config.rpiHomeLab.k3s.leader) config.rpiHomeLab.k3s.leaderAddress;
         clusterInit = config.rpiHomeLab.k3s.leader;
-        tokenFile = config.sops.secrets.k3s_token.path;
+        # Let the assertion report missing secrets configuration before evaluating the token path.
+        tokenFile = config.sops.secrets.k3s_token.path or null;
         extraFlags = [
           "--debug"
         ]

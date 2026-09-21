@@ -5,9 +5,9 @@
     k8s
     helm
     submodules
-    ./traefik/default.nix
-    ./metal-lb/default.nix
-    ./certs/default.nix
+    ./traefik
+    ./metal-lb
+    ./longhorn
   ];
 
   submodules.imports = [
