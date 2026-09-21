@@ -17,12 +17,6 @@ in
           chart = kubenix.lib.helm.fetch {
             repo = "https://metallb.github.io/metallb";
             chart = "metallb";
-            # Pinned to 0.15.3: 0.16.x speaker has a ServiceL2Status reconcile
-            # loop (metallb/metallb#3063, OPEN/no fix) that POSTs ServiceL2Status
-            # objects with resourceVersion set, flooding the apiserver+etcd with
-            # "resourceVersion should not be set on objects to be created" at
-            # ~20-30/s and burning the kube-apiserver SLO error budget. 0.15.3 is
-            # the last release confirmed clean by the issue's bisection.
             version = "0.15.3";
             sha256 = "sha256-KWdVaF6CjFjeHQ6HT1WvkI9JnSurt9emLVCpkxma0fg=";
           };
@@ -62,18 +56,6 @@ in
               "10.10.68.0/24"
             ];
             autoAssign = true;
-            avoidBuggyIPs = true;
-          };
-        };
-        IPAddressPool.public = {
-          metadata = {
-            namespace = ns;
-          };
-          spec = {
-            addresses = [
-              "10.10.70.0/24"
-            ];
-            autoAssign = false;
             avoidBuggyIPs = true;
           };
         };
