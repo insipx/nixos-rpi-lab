@@ -3,8 +3,8 @@
 Much of this configuration/how to is also on nvmd/nixos-raspberrypi:
 https://github.com/nvmd/nixos-raspberrypi
 
-A guide for initial setup is available https://insipx.xyz/blog/raspberry-pi-homelab/
-
+A guide for initial setup is available
+https://insipx.xyz/blog/raspberry-pi-homelab/
 
 # Repository layout
 
@@ -91,43 +91,7 @@ All options are under `rpiHomeLab`.
 | `k3s.longhorn`         | boolean        | `false` | Enable longhorn as well as NixOS specific options to make it work with ZFS.                             |
 | `k3s.longhornDiskSize` | string or null | `null`  | Size of the ZFS volume backing Longhorn’s ext4 overlay, `"900G"` would make a 900GB ext4 overlay on ZFS |
 
-#### Node roles
-
-Set `k3s.enable = true` for each participating node.
-
-| Role           | `k3s.leader` | `k3s.agent` | `k3s.leaderAddress` |
-| -------------- | ------------ | ----------- | ------------------- |
-| Initial server | `true`       | `false`     | Not used            |
-| Joining server | `false`      | `false`     | Existing server URL |
-| Worker         | `false`      | `true`      | Existing server URL |
-
-Conflicting role settings are not validated.
-
-#### K3s behavior
-
-- Requires the SOPS secret `k3s_token`
-- Disables bundled Traefik and ServiceLB on server nodes. This is to allow for
-  metallb.
-- Enables the `--debug` flag.
-- Opens TCP ports `6443`, `2379`, `2380`, `9100`, and `10250`.
-- Opens UDP ports `5353`, `8472`, and `123`.
-
-#### Longhorn storage
-
-`k3s.longhorn = true` enables iSCSI, rpcbind, NFS support, and an iSCSI service
-adjustment for NixOS. When K3s is enabled, it also adds the node label
-`longhorn-storage=enabled`.
-
-The host prerequisites and Disko size assignment apply independently of
-`k3s.enable`.
-
-`k3s.longhornDiskSize` sets:
-
-```nix
-disko.devices.zpool.rpool.datasets."longhorn-ext4".size
-```
-
-this is meant to be used with the filesystem.nix disko configuration in the
+This is meant to be used with the filesystem.nix disko configuration in the
 template.
 
 ### Example: worker with Longhorn storage
