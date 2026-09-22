@@ -8,24 +8,18 @@ let
   ];
 in
 inputs.colmena.lib.makeHive {
-  meta =
-    let
-      pkgConfig = {
-        system = "x86_64-linux";
-        overlays = [
-        ];
-        config.allowUnfree = true;
-      };
-    in
-    {
-      nixpkgs = import inputs.nixos-raspberrypi.inputs.nixpkgs pkgConfig;
-      # if you have remote builders
-      machinesFile = /etc/nix/machines;
-      specialArgs = {
-        inherit inputs;
-        inherit (inputs) nixos-raspberrypi;
-      };
+  meta = {
+    nixpkgs = import inputs.nixos-raspberrypi.inputs.nixpkgs {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
     };
+    # if you have remote builders
+    machinesFile = /etc/nix/machines;
+    specialArgs = {
+      inherit inputs;
+      inherit (inputs) nixos-raspberrypi;
+    };
+  };
 
   node1 = _: {
     imports = [
@@ -80,10 +74,11 @@ inputs.colmena.lib.makeHive {
         address = "10.10.10.2/22";
         interface = "end0";
       };
-      k3s.longhorn = true;
-      k3s.longhornDiskSize = "25G";
-
-      k3s.enable = true;
+      k3s = {
+        longhorn = true;
+        longhornDiskSize = "25G";
+        enable = true;
+      };
     };
     lab-secrets.settings.k3s = true;
 

@@ -13,10 +13,8 @@
     ghostty.terminfo
     powertop
     sops
-    efibootmgr
     cowsay
     lshw
-    ntp
     cryptsetup
     lvm2
     nfs-utils
@@ -24,10 +22,10 @@
     lnav
     traceroute
   ];
-  # NTP somewhere is important f
+  # NTP somewhere is important
   services.chrony = {
     enable = true;
-    enableNTS = false; # not enabled in opnsense
+    enableNTS = true;
     servers = [
       "time.cloudflare.com"
     ];
@@ -37,19 +35,19 @@
   };
   environment.enableAllTerminfo = false;
   nix = {
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
     gc = {
       automatic = true;
       dates = "daily";
       options = "--delete-older-than 7d";
     };
-    extraOptions = ''
-      min-free = ${toString (100 * 1024 * 1024)}
-      max-free = ${toString (1024 * 1024 * 1024)}
-    '';
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      min-free = "${toString (100 * 1024 * 1024)}";
+      max-free = "${toString (1024 * 1024 * 1024)}";
+    };
   };
   rpiHomeLab = {
     k3s.leaderAddress = "https://leader.lab.lan:6443";

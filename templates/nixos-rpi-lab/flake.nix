@@ -31,6 +31,7 @@
     kubenix.url = "github:hall/kubenix";
     homelab.url = "github:insipx/nixos-rpi-lab";
   };
+
   nixConfig = {
     extra-substituters = [
       "https://nixos-raspberrypi.cachix.org"
